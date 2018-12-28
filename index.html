@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang ="ja">
   <head>
@@ -50,32 +49,116 @@
       </div>
     </div>
     <script type="text/javascript">
-      (function(){
-        'use strict';
-          //日本語->英語の時
-          const tangos =[{question:'hello',answer:'こん'},{question:'report',answer:'報告'},
-          {question:'protected',answer:'守る'}];
-          const btn =document.getElementById('btn')
-          const element=document.getElementById('english');
-          var currentQuestion=0;
-          questionMode(){
-            switch (mode) {
-              case expression:
-                break;
-            }
+      class Tango{
+        constructor(){
+          this.isAnswer =true
+          this.isQuestion=false
+          this.tangos =[
+          //出る度A動詞
+          {question:'hello',answer:'こん'},{question:'report',answer:'報告'},
+          {question:'protected',answer:'守る'},{question:'borrow',answer:'借りる'},
+          {question:'prefer',answer:'の方を好む'},{question:'add',answer:'を加える'},
+          {question:'improve',answer:'改善する'},{question:'mind',answer:'嫌がる、気をつける'},
+          {question:'allow',answer:'許す'},{question:'cause',answer:'引き起こす'},
+          {question:'wish',answer:'と願う'},{question:'recommend',answer:'推薦する'},
+          {question:'wonder',answer:'驚くべきことに'},{question:'contain',answer:'含める、収容できる'},
+          {question:'feed',answer:'ものを与える'},{question:'solve',answer:'解決する'},
+          {question:'arrange',answer:'取り決める'},{question:'celecrate',answer:'を祝う'},
+          {question:'delay',answer:'を遅らせる、延期する'},{question:'include',answer:'を含む'},
+          {question:'remain',answer:'残る、のままである'},{question:'reserve',answer:'を予約する'},
+          {question:'serve',answer:'を出す、支給する'},{question:'spread',answer:'広がる'},
+          {question:'transport',answer:'を輸送する'},{question:'upset',answer:'動揺する'},
+          //出る度A名詞
+          {question:'lighthouse',answer:'灯台'},{question:'photogragph',answer:'写真'},
+          {question:'owner',answer:'所有者'},{question:'fossill',answer:'化石'},
+          {question:'excuse',answer:'言い訳'},{question:'clothes',answer:'衣服'},
+          {question:'couple',answer:'カップル'},{question:'fact',answer:'事実'},
+          {question:'puppet',answer:'操り人形'},{question:'profeseor',answer:'教授'},
+          {question:'vehicle',answer:'車、乗り物'},{question:'passenger',answer:'乗客'},
+          {question:'addres',answer:'住所'},{question:'co-worker',answer:'同僚、協力者'},
+          {question:'pigeion',answer:'鳩'},{question:'article',answer:'記事'},
+          {question:'discovery',answer:'発見'},{question:'navy',answer:'海軍'},
+          {question:'purpose',answer:'目的'},{question:'bill',answer:'請求書、紙幣'},
+          {question:'desert',answer:'砂漠'},{question:'detail',answer:'詳細'},
+          {question:'distance',answer:'距離'},{question:'employee',answer:'従業員'},
+          {question:'reservation',answer:'予約'},{question:'restroom',answer:'トイレ'},
+          {question:'statement',answer:'陳述、声明'},{question:'advertaziment',answer:'広告、宣伝'},
+          {question:'amount',answer:'量、合計'},{question:'avenue',answer:'大通り'},
+          {question:'countryside',answer:'田舎'},{question:'degree',answer:'温度、角度、程度'},
+          {question:'earthquake',answer:'地震'},{question:'effort',answer:'努力'},
+          {question:'favor',answer:'行為、親切な行為'},{question:'fee',answer:'料金、謝礼'},
+          {question:'indestry',answer:'産業、工場'},{question:'material',answer:'材料、記事'},
+          {question:'quality',answer:'質'},{question:'tourist',answer:'旅行者'},]
+          this.mode == this.isAnswer
+          this.btn =document.getElementById('btn')
+          this.currentQuestion = 0
+          this.element =document.getElementById('english')
+        }
+        render(str){
+          this.element.innerText =str
+        }
+        //ボタンがクリックされたときに
+        //問題の出題の仕方を変えたい
+        questionMode(){
+          if(this.mode ==this.isAnswer){
+            this.mode !=this.isAnswer
+            this.btn.onclick = () => this.question2()
+          }else{
+            this.mode ==this.isAnswer
+            this.btn.onclick = () => this.question()
           }
-          function render(str){
-            element.innerText=str;
+        }
+        //日本語を出題するメソッド
+        tooglQnA2(){
+          if(this.isQuestion){
+            this.isQuestion=true
+            this.element.onclick = () =>this.answer2()
+          }else{
+            this.isQuestion=false
+            this.element.onclick = () =>this.question2()
           }
-          function questionMode(){
-            var mode=true;
-            if(engQuestion()&&engAnswer()){
-              mode=false
-                btn.addEventListener('click',jpQuestion);
-            }else{
-              mode=false
-            btn.addEventListener('click',engQuestion);
-            }
+        }
+        question2(){
+          this.currentQuestion = Math.floor(Math.random() * this.tangos.length)
+          this.render(this.tangos[this.currentQuestion].answer)
+          this.tooglQnA2()
+        }
+        answer2(){
+          this.render(this.tangos[this.currentQuestion].question)
+          this.tangos.splice(this.currentQuestion,1)
+          this.tooglQnA2()
+        }
+
+//英語->日本語
+        tooglQnA(){
+          if(this.isAnswer){
+            this.isAnswer =false
+            this.element.onclick = () =>this.answer()
+          }else{
+            this.isAnswer =true
+            this.element.onclick = () =>this.question()
+          }
+        }
+        question(){
+          this.currentQuestion = Math.floor(Math.random() * this.tangos.length)
+           this.render(this.tangos[this.currentQuestion].question)
+          this.tooglQnA()
+        }
+        answer(){
+            this.render(this.tangos[this.currentQuestion].answer)
+            this.tangos.splice(this.currentQuestion,1)
+            this.tooglQnA()
+        }
+      }
+      function main(){
+        const tango =new Tango()
+        tango.question()
+      }
+      document.addEventListener('DOMContentLoaded', main)
+    </script>
+  </body>
+</html>
+
           }
           function jpQuestion(){
             currentQuestion = Math.floor(Math.random() * tangos.length);
